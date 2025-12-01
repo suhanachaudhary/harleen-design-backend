@@ -1,35 +1,19 @@
 
-const multer = require('multer');
-const path = require('path');
-const fs = require('fs');
+const multer = require("multer");
+const { CloudinaryStorage } = require("multer-storage-cloudinary");
+const cloudinary = require("../config/cloudinary");
 
-const uploadDir = path.join(__dirname, '..', 'uploads');
-if (!fs.existsSync(uploadDir)) fs.mkdirSync(uploadDir);
-
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, uploadDir);
+const storage = new CloudinaryStorage({
+    cloudinary,
+    params: {
+        folder: "profile_images",
+        allowed_formats: ["jpg", "png", "jpeg", "webp"],
+        public_id: (req, file) => {
+            return `profile_${Date.now()}`;
+        },
     },
-    filename: function (req, file, cb) {
-        const unique = Date.now() + '-' + Math.round(Math.random() * 1E9);
-        const ext = path.extname(file.originalname).toLowerCase();
-        cb(null, `${file.fieldname}-${unique}${ext}`);
-    }
 });
 
-const fileFilter = (req, file, cb) => {
-    const allowed = ['.png', '.jpg', '.jpeg'];
-    const ext = path.extname(file.originalname).toLowerCase();
-    if (!allowed.includes(ext)) {
-        return cb(new Error('Only jpg/jpeg/png files are allowed'));
-    }
-    cb(null, true);
-};
-
-const upload = multer({
-    storage,
-    limits: { fileSize: 2 * 1024 * 1024 }, // 2MB
-    fileFilter
-});
+const upload = multer({ storage });
 
 module.exports = upload;

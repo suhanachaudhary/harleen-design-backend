@@ -33,9 +33,9 @@ const register = async (req, res, next) => {
         };
 
         if (req.file) {
-            // stored as /uploads/filename
-            userData.profile_image = `/uploads/${req.file.filename}`;
+            userData.profile_image = req.file.path;
         }
+
 
         const user = new User(userData);
         await user.save();
