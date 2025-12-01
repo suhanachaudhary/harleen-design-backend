@@ -21,7 +21,7 @@ const UserSchema = new mongoose.Schema({
     refreshTokens: [RefreshTokenSchema],
     created_at: { type: Date, default: Date.now },
     updated_at: { type: Date, default: Date.now }
-});
+})
 
 // index for faster searching by name/email/state/city
 UserSchema.index({ name: 'text', email: 'text', state: 'text', city: 'text' });

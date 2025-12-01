@@ -11,7 +11,7 @@ const registerSchema = Joi.object({
     country: Joi.string().required(),
     pincode: Joi.string().pattern(/^[0-9]{4,10}$/).allow('', null),
     password: Joi.string().min(6).pattern(/[0-9]/).required()
-});
+}).unknown(true);
 
 const loginSchema = Joi.object({
     identifier: Joi.string().required(), // email or phone
@@ -29,7 +29,7 @@ const updateSchema = Joi.object({
     pincode: Joi.string().pattern(/^[0-9]{4,10}$/).allow('', null).optional(),
     role: Joi.string().valid('user', 'admin').optional(),
     profile_image: Joi.any(),
-});
+}).unknown(true);
 
 module.exports = {
     registerSchema,
