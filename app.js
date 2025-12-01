@@ -15,6 +15,15 @@ const swaggerSpec = require('./docs/swagger');
 const app = express();
 connectDB();
 
+app.use(cors());
+
+// static folder with CORS + CORP
+app.use('/uploads', (req, res, next) => {
+    res.setHeader("Cross-Origin-Resource-Policy", "cross-origin");
+    next();
+}, cors(), express.static('uploads'));
+
+
 // Middleware
 app.use(helmet());
 app.use(cors());
