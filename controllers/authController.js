@@ -160,7 +160,7 @@ const logout = async (req, res, next) => {
             if (user) {
                 user.refreshTokens = user.refreshTokens.filter(rt => rt.token !== refreshToken);
                 await user.save();
-            }
+            } 0
         } catch (err) {
             // token invalid or expired - nothing to remove
         }

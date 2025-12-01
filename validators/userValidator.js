@@ -27,7 +27,8 @@ const updateSchema = Joi.object({
     city: Joi.string().optional(),
     country: Joi.string().optional(),
     pincode: Joi.string().pattern(/^[0-9]{4,10}$/).allow('', null).optional(),
-    role: Joi.string().valid('user', 'admin').optional()
+    role: Joi.string().valid('user', 'admin').optional(),
+    profile_image: Joi.any(),
 });
 
 module.exports = {
